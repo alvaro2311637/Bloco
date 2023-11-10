@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Bloco de Notas</title>
+</head>
+<body>
+
+<h1>Meu Bloco de Notas</h1>
+
+<textarea id="noteArea" rows="10" cols="50"></textarea><br><br>
+<button onclick="saveNote()">Salvar Nota</button>
+<button onclick="clearNotes()">Limpar Notas</button>
+
+<h2>Notas Salvas</h2>
+<div id="savedNotes"></div>
+
+<script>
+function saveNote() {
+  var noteContent = document.getElementById('noteArea').value;
+  var savedNotesContainer = document.getElementById('savedNotes');
+
+  if (noteContent.trim() !== '') {
+    var newNote = document.createElement('p');
+    newNote.textContent = noteContent;
+    savedNotesContainer.appendChild(newNote);
+
+    var separator = document.createElement('hr');
+    savedNotesContainer.appendChild(separator);
+
+    document.getElementById('noteArea').value = '';
+
+    alert('Nota salva com sucesso!');
+  } else {
+    alert('Não é possível salvar uma nota em branco.');
+  }
+}
+
+function clearNotes() {
+  document.getElementById('noteArea').value = '';
+  var savedNotesContainer = document.getElementById('savedNotes');
+  savedNotesContainer.innerHTML = '';
+  localStorage.removeItem('userNote');
+  alert('Notas apagadas.');
+}
+
+window.onload = function() {
+  var savedNote = localStorage.getItem('userNote');
+  if (savedNote !== null) {
+    var savedNotesContainer = document.getElementById('savedNotes');
+    var newNote = document.createElement('p');
+    newNote.textContent = savedNote;
+    savedNotesContainer.appendChild(newNote);
+  }
+};
+</script>
+
+</body>
+</html>
